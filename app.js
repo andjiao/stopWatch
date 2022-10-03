@@ -1,21 +1,22 @@
-//importerer express
-const { response } = require("express");
+import express from "express";
 
-//instansierer the library express
-const express = require("express")
+const app = express();
 
-const app = express()
+import path from "path"
 
-app.get("", (req,res)=>{
-    //req.params er et json-objekt, hvilket gør at man kan itlgå properties
-    console.log(req.params);
+app.use(express.static("public"));
 
-    if(Number(req.params.id) === "1"){
-        res.send({name: "John", theBestAndOGDeer:True})
+app.get("/",(req,res)=>{
+    res.sendFile(path.resolve("/public/index.js"));
 
-    }
-    else{
-
-    }
-    res.send({errorMessage:"I don't know that deer"});
 })
+
+const PORT = process.env.PORT || 8080;
+const server = app.listen(PORT, (error)=>
+{
+    if(error){
+        console.log(error)
+    }
+    console.log("Server is running on port", server.address().port)
+});
+
